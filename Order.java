@@ -1,5 +1,6 @@
 
 package com.menu;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,12 +8,12 @@ public class Order implements Menu {
     private double saleFruit = 0.0;
     private double saleMeat = 0.0;
     private double saleVeg = 0.0;
-    
+
     private int countFruitUser = 0;
     private int countMeatUser = 0;
     private int countVegUser = 0;
-    
-    
+
+
     List<Eat> orderList = new ArrayList<>();
 
     @Override
@@ -26,86 +27,102 @@ public class Order implements Menu {
         orderList.remove(eat);
     }
 
-    
+
     @Override
     public void setSale(double saleFruit, double saleMeat, double saleVeg) {
         this.saleFruit = saleFruit;
         this.saleMeat = saleMeat;
         this.saleVeg = saleVeg;
     }
-    
+
     @Override
     public void setCount(int countFruitUser, int countMeatUser, int countVegUser) {
-    	this.countFruitUser=countFruitUser;
-    	this.countMeatUser=countMeatUser;
-    	this.countVegUser=countVegUser;
+        this.countFruitUser = countFruitUser;
+        this.countMeatUser = countMeatUser;
+        this.countVegUser = countVegUser;
     }
-    
-    
+
+
     @Override
     public double getCountForFruit() {
-    	return countFruitUser;
+        return countFruitUser;
     }
+
     @Override
     public double getCountForMeat() {
-    	return countMeatUser;
+        return countMeatUser;
     }
+
     @Override
     public double getCountForVeg() {
-    	return countVegUser;
+        return countVegUser;
     }
-    
-    
+
+
     @Override
     public double getSaleForFruit() {
         return saleFruit;
     }
+
     @Override
     public double getSaleForMeat() {
-    	return saleMeat;
+        return saleMeat;
     }
+
     @Override
     public double getSaleForVeg() {
-    	return saleVeg;
+        return saleVeg;
     }
-    
+
     @Override
     public double calculateSaleUser(double price, int countFruit, int countMeat, int countVeg) {
-    	double saleuser = 0.0;
-    if (countFruit >= getCountForFruit() && countMeat < getCountForMeat() && countVeg < getCountForVeg()) {
-    	saleuser = price * getSaleForFruit();
-    } else if (countFruit < getCountForFruit() && countMeat >= getCountForMeat() && countVeg < getCountForVeg()) {
-    	saleuser = price * getSaleForMeat();
-    } else if (countFruit < getCountForFruit() && countMeat < getCountForMeat() && countVeg >= getCountForVeg()) {
-    	saleuser = price * getSaleForVeg();
-    } else if(countFruit >= getCountForFruit() && countMeat >= getCountForMeat() && countVeg >= getCountForVeg()) {
-    	saleuser=price*(getSaleForFruit() + getSaleForMeat() + getSaleForVeg());
+        double saleUser = 0.0;
+        if (countFruit >= getCountForFruit() && countMeat < getCountForMeat() && countVeg < getCountForVeg()) {
+            saleUser = price * getSaleForFruit();
+        } else if (countFruit < getCountForFruit() && countMeat >= getCountForMeat() && countVeg < getCountForVeg()) {
+            saleUser = price * getSaleForMeat();
+        } else if (countFruit < getCountForFruit() && countMeat < getCountForMeat() && countVeg >= getCountForVeg()) {
+            saleUser = price * getSaleForVeg();
+        } else if (countFruit >= getCountForFruit() && countMeat >= getCountForMeat() && countVeg < getCountForVeg()) {
+            saleUser = price * (getSaleForFruit() + getSaleForMeat());
+        } else if (countFruit >= getSaleForFruit() && countMeat < getCountForMeat() && countVeg >= getCountForVeg()) {
+            saleUser = price * (getSaleForFruit() + getSaleForVeg());
+        } else if (countFruit < getCountForFruit() && countMeat >= getCountForMeat() && countVeg >= getCountForVeg()) {
+            saleUser = price * (getSaleForMeat() + getSaleForVeg());
+        } else if (countFruit >= getCountForFruit() && countMeat >= getCountForMeat() && countVeg >= getCountForVeg()) {
+            saleUser = price * (getSaleForFruit() + getSaleForMeat() + getSaleForVeg());
+        }
+        return saleUser;
     }
-    return saleuser;
-    }
-    
+
     @Override
-   public double calculateSale(double price, int countFruit, int countMeat, int countVeg) {
-    	double sale= 0.0;
-    	  if (countVeg >= 5 || countMeat >= 5 || countFruit >= 5) {
-              sale = price * 0.25;
-          } else if (countVeg == 4 && countMeat < 4 && countFruit < 4) {
-              sale = price * 0.15;
-          } else if (countMeat == 4 && countFruit < 4 && countVeg < 4) {
-              sale = price * 0.10;
-          } else if (countFruit == 4 && countMeat < 4 && countVeg < 4) {
-              sale = price * 0.05;
-          } else if (countVeg <= 3 && countMeat <= 3 && countFruit <= 3) {
-              sale = 0;
-          }
-    	  return sale;
+    public double calculateSale(double price, int countFruit, int countMeat, int countVeg) {
+        double sale = 0.0;
+        if (countFruit >= 5 || countMeat >= 5 || countVeg >= 5) {
+            sale = price * 0.25;
+        } else if (countVeg == 4 && countMeat < 4 && countFruit < 4) {
+            sale = price * 0.15;
+        } else if (countMeat == 4 && countFruit < 4 && countVeg < 4) {
+            sale = price * 0.10;
+        } else if (countFruit == 4 && countMeat < 4 && countVeg < 4) {
+            sale = price * 0.05;
+        } else if (countFruit == 4 && countMeat == 4 && countVeg < 4) {
+            sale = price * 0.15;
+        } else if (countFruit == 4 && countMeat < 4 && countVeg == 4) {
+            sale = price * 0.2;
+        } else if (countFruit < 4 && countMeat == 4 && countVeg == 4) {
+            sale = price * 0.25;
+        } else if (countFruit <= 3 && countMeat <= 3 && countVeg <= 3) {
+            sale = 0;
+        }
+        return sale;
     }
-    
+
     @Override
     public void calculate(List<Eat> eats) {
         double price = 0.0;
-        double sale = 0.0;
-        double totalPrice = 0.0;
+        double sale;
+        double totalPrice;
 
         int countFruit = 0;
         int countVeg = 0;
@@ -156,21 +173,20 @@ public class Order implements Menu {
         }
 
         if (getSaleForFruit() == 0.0 && getSaleForMeat() == 0.0 && getSaleForVeg() == 0.0) {
-          sale = calculateSale(price, countFruit, countMeat, countVeg);
+            sale = calculateSale(price, countFruit, countMeat, countVeg);
             totalPrice = price - sale;
-            System.out.println("totally price: " + totalPrice + " sale: " + sale);
-        } 
-        else {
-        	sale = calculateSaleUser(price, countFruit, countMeat, countVeg);
-        	totalPrice = price - sale;
-        	System.out.println("totally price: " + totalPrice + " sale: " + sale);
+            System.out.println("Кінцеваь ціна: " + totalPrice + " знижкка(стандартна): " + sale);
+        } else {
+            sale = calculateSaleUser(price, countFruit, countMeat, countVeg);
+            totalPrice = price - sale;
+            System.out.println("Кінцева ціна: " + totalPrice + " знижка(Ваша власна): " + sale);
         }
     }
 
     @Override
     public void getEat() {
         for (Eat item : orderList) {
-            System.out.println("Dish: " + item);
+            System.out.println("Страва: " + item);
         }
     }
 }
