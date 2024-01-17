@@ -74,6 +74,18 @@ public class Start {
                 System.out.println("Сума вашого замовлення:  \uD83D\uDC4D ");
                 order.calculate(order.orderList);
             }
+            System.out.println("Продовжити замовляти хавчик чи ні 1 - так, 2 - ні");
+            int a;
+            a= sc.nextInt();
+            if(a==1){
+                System.out.println("окей го далі)");
+            } else if (a==2) {
+                eat=null;
+                System.out.println("Удачкі :)");
+            }
+            else {
+                System.out.println("Невірне значення");
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
